@@ -17,8 +17,9 @@ type LoaderData = { jokes: Array<Joke> };
 
 export let loader: LoaderFunction = async () => {
   let jokes = await db.joke.findMany();
-
+  console.log(jokes);
   let data: LoaderData = { jokes };
+  console.log(jokes);
   return data;
 };
 
@@ -43,7 +44,11 @@ export default function jokesRoute() {
             <p>here are a few jokes to check out:</p>
             <ul>
               {data.jokes.map((j) => (
-                <li key={j.id}>{j.name}</li>
+                <li key={j.id}>
+                  <Link prefetch="intent" to={j.id}>
+                    {j.name}
+                  </Link>
+                </li>
               ))}
             </ul>
             <Link to="new" className="button">
